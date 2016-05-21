@@ -1,0 +1,43 @@
+.voter {
+    display: inline-block;
+    position: relative;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    .voter-inner {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        
+        table {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    
+    input[type='checkbox'] {
+        display: none;
+    }
+    
+    input[type='checkbox'] + label {
+        background: url(checkbox-checked.svg);
+        background-size: cover;
+        opacity: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    
+    input[type='checkbox']:checked + label {
+        opacity: 1;
+    }
+}
+

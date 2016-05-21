@@ -1,0 +1,89 @@
+<!--
+Copyright (C) 2016 Ilmo Euro <ilmo.euro@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy 
+of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="HomePage.css" />
+    </head>
+    <body>
+        <wicket:extend>
+        <div class="HomePage">
+            <form wicket:id="voteForm" method="post">
+            <div class="voter">
+                <img src="example.png" alt="plan" />
+                <div class="voter-inner">
+                    <table>
+                        <tbody>
+                            <tr wicket:id="votes">
+                                <td wicket:id="cells">
+                                    <input
+                                        type="checkbox"
+                                        wicket:id="vote" />
+                                    <label
+                                        wicket:id="voteLabel">
+                                    </label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="cb2" />
+                                    <label for="cb2"></label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="cb3" />
+                                    <label for="cb3"></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" id="cb4" />
+                                    <label for="cb4"></label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="cb5" />
+                                    <label for="cb5"></label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="cb6" />
+                                    <label for="cb6"></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" id="cb7" />
+                                    <label for="cb7"></label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="cb8" />
+                                    <label for="cb8"></label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="cb9" />
+                                    <label for="cb9"></label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <button type="submit">Äänestä</button>
+            </form>
+        </div>
+        </wicket:extend>
+    </body>
+</html>
