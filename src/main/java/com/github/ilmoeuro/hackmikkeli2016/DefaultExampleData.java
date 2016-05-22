@@ -36,22 +36,22 @@ implements
                 600,
                 80);
         PlanProposal proposal1 = new PlanProposal(
-                "Proposal 1",
+                "Draft 1",
                 "Tähän luonnoksen 1 kuvaus",
                 "example1.png",
                 plan);
         PlanProposal proposal2 = new PlanProposal(
-                "Proposal 2",
+                "Draft 2",
                 "Tähän luonnoksen 2 kuvaus",
                 "example2.png",
                 plan);
         PlanProposal proposal3 = new PlanProposal(
-                "Proposal 3",
+                "Draft 3",
                 "Tähän luonnoksen 3 kuvaus",
                 "example3.png",
                 plan);
         PlanProposal proposal4 = new PlanProposal(
-                "Proposal 4",
+                "Draft 4",
                 "Tähän luonnoksen 4 kuvaus",
                 "example4.png",
                 plan);
