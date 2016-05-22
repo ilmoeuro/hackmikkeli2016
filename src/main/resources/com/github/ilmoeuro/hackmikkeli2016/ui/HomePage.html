@@ -25,64 +25,73 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <body>
         <wicket:extend>
         <div class="HomePage">
-            <form wicket:id="voteForm" method="post">
-            <div class="voter">
-                <img src="example.png" alt="plan" />
-                <div class="voter-inner">
-                    <table>
-                        <tbody>
-                            <tr wicket:id="votes">
-                                <td wicket:id="cells">
-                                    <input
-                                        type="checkbox"
-                                        wicket:id="vote" />
-                                    <label
-                                        wicket:id="voteLabel">
-                                    </label>
-                                </td>
-                                <td>
-                                    <input type="checkbox" id="cb2" />
-                                    <label for="cb2"></label>
-                                </td>
-                                <td>
-                                    <input type="checkbox" id="cb3" />
-                                    <label for="cb3"></label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="checkbox" id="cb4" />
-                                    <label for="cb4"></label>
-                                </td>
-                                <td>
-                                    <input type="checkbox" id="cb5" />
-                                    <label for="cb5"></label>
-                                </td>
-                                <td>
-                                    <input type="checkbox" id="cb6" />
-                                    <label for="cb6"></label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="checkbox" id="cb7" />
-                                    <label for="cb7"></label>
-                                </td>
-                                <td>
-                                    <input type="checkbox" id="cb8" />
-                                    <label for="cb8"></label>
-                                </td>
-                                <td>
-                                    <input type="checkbox" id="cb9" />
-                                    <label for="cb9"></label>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="menu pure-menu">
+                <span class="pure-menu-heading">Plans</span>
+                <ul class="plans pure-menu-list">
+                    <li class="pure-menu-item" wicket:id="availablePlans">
+                        <a class="pure-menu-link" wicket:id="jumpToPlan" href="./">
+                            <span wicket:id="title"></span>
+                        </a>
+                    </li>
+                </ul>
+                <span class="pure-menu-heading">Proposals</span>
+                <ul class="proposals pure-menu-list">
+                    <li class="pure-menu-item" wicket:id="availableProposals">
+                        <a class="pure-menu-link" wicket:id="jumpToProposal" href="./">
+                            <span wicket:id="title"></span>
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <button type="submit">Äänestä</button>
-            </form>
+            <div>
+                <div class="votes-saved" wicket:id="votesSaved">
+                    Vote saved.
+                </div>
+                <form class="vote-form" wicket:id="voteForm" method="post">
+                    <div class="voter">
+                        <img
+                            wicket:id="planImage"
+                            src="example.png"
+                            alt="plan" />
+                        <div class="voter-inner">
+                            <table>
+                                <tbody>
+                                    <tr wicket:id="votes">
+                                        <td wicket:id="cells">
+                                            <input
+                                                type="checkbox"
+                                                wicket:id="vote" />
+                                            <label
+                                                wicket:id="voteLabel">
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="comment-box">
+                        <p>
+                            Click the parts of the plan you like the most.
+                            <br/><br/>
+                        </p>
+                        <p>Comment (optional)</p>
+                        <p>
+                            <textarea
+                                wicket:id="comment"
+                                rows="15"
+                                cols="30"
+                                ></textarea><br/><br/>
+                        </p>
+                        <p>
+                            <button
+                                class="pure-button save-votes-button"
+                                wicket:id="saveVotes"
+                                type="submit">Vote</button>
+                        </p>
+                    </div>
+                </form>
+            </div>
         </div>
         </wicket:extend>
     </body>

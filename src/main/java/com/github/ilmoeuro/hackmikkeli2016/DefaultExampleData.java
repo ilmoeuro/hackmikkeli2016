@@ -29,6 +29,38 @@ implements
     public void populate(DSLContext jooq) {
         UnitOfWork uw = new UnitOfWork(jooq);
 
+        Plan plan = new Plan(
+                "Plan 1",
+                "Tähän asemakaavan kuvaus",
+                600,
+                600,
+                80);
+        PlanProposal proposal1 = new PlanProposal(
+                "Proposal 1",
+                "Tähän luonnoksen 1 kuvaus",
+                "example1.png",
+                plan);
+        PlanProposal proposal2 = new PlanProposal(
+                "Proposal 2",
+                "Tähän luonnoksen 2 kuvaus",
+                "example2.png",
+                plan);
+        PlanProposal proposal3 = new PlanProposal(
+                "Proposal 3",
+                "Tähän luonnoksen 3 kuvaus",
+                "example3.png",
+                plan);
+        PlanProposal proposal4 = new PlanProposal(
+                "Proposal 4",
+                "Tähän luonnoksen 4 kuvaus",
+                "example4.png",
+                plan);
+
+        uw.addEntity(plan);
+        uw.addEntity(proposal1);
+        uw.addEntity(proposal2);
+        uw.addEntity(proposal3);
+        uw.addEntity(proposal4);
 
         uw.execute();
     }

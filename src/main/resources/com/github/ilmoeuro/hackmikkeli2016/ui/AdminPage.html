@@ -1,0 +1,77 @@
+<!--
+Copyright (C) 2016 Ilmo Euro <ilmo.euro@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy 
+of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="HomePage.css" />
+    </head>
+    <body>
+        <wicket:extend>
+        <div class="HomePage">
+            <div class="menu pure-menu">
+                <span class="pure-menu-heading">Plans</span>
+                <ul class="plans pure-menu-list">
+                    <li class="pure-menu-item" wicket:id="availablePlans">
+                        <a class="pure-menu-link" wicket:id="jumpToPlan" href="./">
+                            <span wicket:id="title"></span>
+                        </a>
+                    </li>
+                </ul>
+                <span class="pure-menu-heading">Proposals</span>
+                <ul class="proposals pure-menu-list">
+                    <li class="pure-menu-item" wicket:id="availableProposals">
+                        <a class="pure-menu-link" wicket:id="jumpToProposal" href="./">
+                            <span wicket:id="title"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="voter">
+                <img
+                    src="example1.png"
+                    alt="example image"
+                    wicket:id="planImage"
+                    />
+                <div class="voter-inner">
+                    <table>
+                        <tbody>
+                            <tr wicket:id="votes">
+                                <td wicket:id="cells">
+                                    <div
+                                        class="num-votes">
+                                        <span
+                                            wicket:id="numVotes" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div wicket:id="commentContainer" class="comments">
+                <p><b>Comments</b></p>
+                <div wicket:id="comments" class="comment">
+                    <span wicket:id="text"></span>
+                </div>
+            </div>
+        </div>
+        </wicket:extend>
+    </body>
+</html>

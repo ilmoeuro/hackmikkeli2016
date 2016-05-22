@@ -30,7 +30,7 @@ import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
-public final class SessionRunner {
+public final class SessionRunner implements Serializable {
     private final static long serialVersionUID = 0l;
     
     public static final @Data class Config implements Serializable {

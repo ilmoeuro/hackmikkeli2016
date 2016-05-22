@@ -83,6 +83,8 @@ public final class HmApplication extends AuthenticatedWebApplication {
         WebjarsSettings webjarsSettings = new WebjarsSettings();
         WicketWebjars.install(this, webjarsSettings);
 
+        mountPage("/admin", AdminPage.class);
+
         getMarkupSettings().setStripWicketTags(true);
     }
 

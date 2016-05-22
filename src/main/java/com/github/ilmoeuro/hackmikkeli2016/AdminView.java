@@ -21,17 +21,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.Value;
 
 @RequiredArgsConstructor
 public class
-        UserVoteView
+        AdminView
 implements
         Refreshable,
         Serializable
@@ -45,7 +43,13 @@ implements
 
     @AllArgsConstructor
     public static @Data class VotesCell implements Serializable {
-        Boolean vote;
+        int numVotes;
+
+        public String getStyle() {
+            return String.format(
+                    "background-color: rgba(0,255,0,%f);",
+                    numVotes / 10.0);
+        }
     }
 
     @Getter
@@ -55,16 +59,10 @@ implements
     private PlanProposal proposal;
 
     @Getter
-    @Setter
-    private List<VotesRow> votes = new ArrayList<>();
+    private transient List<VotesRow> votes = new ArrayList<>();
 
     @Getter
-    @Setter
-    private boolean votesSaved;
-
-    @Getter
-    @Setter
-    private String comment;
+    private transient List<PlanComment> comments;
 
     @Getter
     private transient List<Plan> availablePlans;
@@ -73,21 +71,13 @@ implements
     private transient List<PlanProposal> availableProposals;
 
     public void setPlan(Plan plan) {
-        if (!Objects.equals(this.plan, plan)) {
-            this.proposal = null;
-            this.plan = plan;
-            clearVotes();
-            votesSaved = false;
-        }
+        this.proposal = null;
+        this.plan = plan;
         refresh();
     }
 
     public void setProposal(PlanProposal proposal) {
-        if (!Objects.equals(this.proposal, proposal)) {
-            this.proposal = proposal;
-            clearVotes();
-            votesSaved = false;
-        }
+        this.proposal = proposal;
         refresh();
     }
 
@@ -107,60 +97,37 @@ implements
                         .where(PLAN_PROPOSAL.PLAN_ID.eq(plan.getId()))
                         .fetchInto(PlanProposal.class);
             }
-        });
-    }
 
-    public void saveVotes() {
-        if (proposal == null) {
-            return;
-        }
-        runner.exec(jooq -> {
-            UnitOfWork uow = new UnitOfWork(jooq);
+            votes = new ArrayList<>();
             int tileNumber = 0;
-            for (VotesRow votesRow : votes) {
-                for (VotesCell votesCell : votesRow.getCells()) {
-                    if (votesCell.getVote()) {
-                        PlanVote vote = new PlanVote(proposal, tileNumber);
-                        uow.addEntity(vote);
+            if (plan != null && proposal != null) {
+                for (int j=0; j<plan.getNumRows(); j++) {
+                    List<VotesCell> cells = new ArrayList<>();
+                    for (int i=0; i<plan.getNumColumns(); i++) {
+                        int numVotes = jooq
+                                .selectCount()
+                                .from(PLAN_VOTE)
+                                .where(
+                                        PLAN_VOTE.PROPOSAL_ID.eq(proposal.getId())
+                                        .and(PLAN_VOTE.TILE_NUMBER.eq(tileNumber)))
+                                .fetchOneInto(Integer.class);
+                        cells.add(new VotesCell(numVotes));
+                        tileNumber++;
                     }
-                    tileNumber++;
+                    votes.add(new VotesRow(cells));
                 }
             }
 
-            if (comment != null) {
-                PlanComment entity = new PlanComment(proposal, comment);
-                uow.addEntity(entity);
+            comments = new ArrayList<>();
+
+            if (plan != null && proposal != null) {
+                comments = jooq
+                        .select(PLAN_COMMENT.fields())
+                        .from(PLAN_COMMENT)
+                        .where(PLAN_COMMENT.PROPOSAL_ID.eq(proposal.getId())
+                                .and(PLAN_COMMENT.DELETED.eq(false)))
+                        .fetchInto(PlanComment.class);
             }
-
-            comment = null;
-
-            uow.execute();
         });
-        
-        votesSaved = true;
-    }
-
-    private void clearVotes() {
-        if (votes != null) {
-            for (VotesRow row : votes) {
-                for (VotesCell cell : row.getCells()) {
-                    cell.setVote(null);
-                }
-                row.getCells().clear();
-            }
-            votes.clear();
-        }
-
-        if (plan == null ||proposal == null) {
-            return;
-        }
-
-        for (int j=0; j<plan.getNumRows(); j++) {
-            List<VotesCell> cells = new ArrayList<>();
-            for (int i=0; i<plan.getNumColumns(); i++) {
-                cells.add(new VotesCell(false));
-            }
-            votes.add(new VotesRow(cells));
-        }
     }
 }

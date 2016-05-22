@@ -24,8 +24,8 @@ import java.net.URL;
 
 public final class TypesafeConfigProvider implements ConfigProvider {
 
-    private static final String CONF_FILE = "membertrack.properties";
-    private static final String CONF_PROPERTY = "membertrack.config";
+    private static final String CONF_FILE = "hackmikkeli2016.properties";
+    private static final String CONF_PROPERTY = "hackmikkeli2016.config";
 
     private final Config config;
 

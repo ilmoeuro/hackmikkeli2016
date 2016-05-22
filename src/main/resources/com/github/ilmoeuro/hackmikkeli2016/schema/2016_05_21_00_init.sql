@@ -47,6 +47,20 @@ CREATE TABLE "PUBLIC"."PLAN_VOTE" (
         UNIQUE ("id"),
     CONSTRAINT "$plan_vote_fk_proposal_id"
         FOREIGN KEY ("proposal_id") REFERENCES "PLAN_PROPOSAL" ("id"),
-    CONSTRAINT "$plan_vote_c_tile_number_gt0"
-        CHECK ("tile_number" > 0)
+    CONSTRAINT "$plan_vote_c_tile_number_ge0"
+        CHECK ("tile_number" >= 0)
+);
+
+CREATE TABLE "PUBLIC"."PLAN_COMMENT" (
+    "pk"                INTEGER             IDENTITY(1,1),
+    "id"                UUID                NOT NULL,
+    "deleted"           BIT(1)              NOT NULL,
+    "proposal_id"       UUID                NOT NULL,
+    "text"              VARCHAR(4096)       NOT NULL,
+    CONSTRAINT "$plan_comment_pk"
+        PRIMARY KEY ("pk"),
+    CONSTRAINT "$plan_comment_u_id"
+        UNIQUE ("id"),
+    CONSTRAINT "$plan_comment_fk_proposal_id"
+        FOREIGN KEY ("proposal_id") REFERENCES "PLAN_PROPOSAL" ("id")
 );

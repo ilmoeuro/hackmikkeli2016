@@ -16,12 +16,15 @@
  */
 package com.github.ilmoeuro.hackmikkeli2016.ui;
 
+import com.github.ilmoeuro.hackmikkeli2016.AdminView;
 import com.github.ilmoeuro.hackmikkeli2016.Plan;
+import com.github.ilmoeuro.hackmikkeli2016.PlanComment;
 import com.github.ilmoeuro.hackmikkeli2016.PlanProposal;
 import com.github.ilmoeuro.hackmikkeli2016.UserVoteView;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.FormComponentLabel;
-import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
@@ -31,36 +34,32 @@ import org.apache.wicket.request.resource.PackageResourceReference;
  *
  * @author Ilmo Euro <ilmo.euro@gmail.com>
  */
-public class HomePage extends HmPage {
+public class AdminPage extends HmPage {
 
-    private final IModel<UserVoteView> model;
-    private final WebMarkupContainer votesSaved;
+    private final IModel<AdminView> model;
     private final Image image;
-    private final HmForm<UserVoteView> form;
+    private final WebMarkupContainer commentContainer;
 
-    public HomePage() {
+    public AdminPage() {
         model = new HmModel<>(
-                new UserVoteView(
+                new AdminView(
                         HmApplication.get().getSessionRunner()));
         PackageResourceReference examplePicture =
-                new PackageResourceReference(HomePage.class, "example1.png");
-        votesSaved = new WebMarkupContainer("votesSaved");
+                new PackageResourceReference(AdminPage.class, "example1.png");
         image = new Image("planImage", examplePicture);
-        form = new HmForm<>("voteForm",  model);
+        commentContainer = new WebMarkupContainer("commentContainer");
     }
 
     @Override
     protected void onConfigure() {
         super.onConfigure(); //To change body of generated methods, choose Tools | Templates.
-        form.setVisible(
-                (model.getObject().getProposal() != null) &&
-                 !model.getObject().isVotesSaved());
-        votesSaved.setVisible(model.getObject().isVotesSaved());
+        image.setVisible(model.getObject().getProposal() != null);
+        commentContainer.setVisible(model.getObject().getProposal() != null);
 
         if (model.getObject().getProposal() != null) {
             PackageResourceReference picture =
                     new PackageResourceReference(
-                            HomePage.class,
+                            AdminPage.class,
                             model.getObject().getProposal().getFilename());
 
             image.setImageResourceReference(picture);
@@ -107,32 +106,31 @@ public class HomePage extends HmPage {
             }
         ));
 
-        add(votesSaved);
-        form.add(new HmButton("saveVotes", () -> {
-            model.getObject().saveVotes();
-        }));
-        form.add(
-                new TextArea("comment",
-                        new PropertyModel<String>(model, "comment")));
-        form.add(image);
-        form.add(
-            new HmListView<UserVoteView.VotesRow>(
+        add(image);
+
+        add(commentContainer);
+        commentContainer.add(new HmListView<PlanComment>(
+                "comments",
+                model,
+                item -> {
+                    item.add(
+                        new HmLabel("text", item)
+                    ); }));
+
+        add(
+            new HmListView<AdminView.VotesRow>(
                 "votes",
                 model,
                 row -> {
                     row.add(
-                        new HmListView<UserVoteView.VotesCell>(
+                        new HmListView<AdminView.VotesCell>(
                             "cells",
                             row,
                             cell -> {
-                                HmCheckBox box =
-                                    new HmCheckBox(
-                                        "vote",
-                                        cell);
-                                cell.add(box);
-                                cell.add(new FormComponentLabel("voteLabel", box));
+                                cell.add(new HmLabel("numVotes", cell));
+                                cell.add(
+                                        AttributeModifier.replace("style",
+                                            new PropertyModel(cell.getModel(), "style")));
                             }));}));
-                            
-        add(form);
     }
 }

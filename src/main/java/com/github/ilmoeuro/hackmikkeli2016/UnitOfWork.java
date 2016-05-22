@@ -43,6 +43,8 @@ public final class UnitOfWork {
             addEntity(PLAN_PROPOSAL, o);
         } else if (o instanceof PlanVote) {
             addEntity(PLAN_VOTE, o);
+        } else if (o instanceof PlanComment) {
+            addEntity(PLAN_COMMENT, o);
         } else {
             throw new IllegalArgumentException(
                 String.format(
