@@ -108,7 +108,6 @@ public class AdminPage extends HmPage {
 
         add(image);
 
-        add(commentContainer);
         commentContainer.add(new HmListView<PlanComment>(
                 "comments",
                 model,
@@ -116,6 +115,7 @@ public class AdminPage extends HmPage {
                     item.add(
                         new HmLabel("text", item)
                     ); }));
+        add(commentContainer);
 
         add(
             new HmListView<AdminView.VotesRow>(

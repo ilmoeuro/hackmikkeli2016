@@ -2,16 +2,37 @@
     box-sizing: border-box;
 }
 
-.HomePage {
-    display: flex;
+h1 {
+    padding-left: 2em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    background-color: #eee;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
+.pure-theme-hackmikkeli2016 .pure-menu-link {
+}
+
+@media screen and (min-width: 768px) {
+    .HomePage {
+        display: flex;
+
+        .menu {
+            width: 150px;
+        }
+    }
     
-    .menu {
-        width: 150px;
+    
+    .vote-form {
+        display: flex;
     }
 }
 
-.vote-form {
-    display: flex;
+textarea {
+    max-width: 100%;
 }
 
 .votes-saved {
@@ -60,7 +81,7 @@
             }
             
             td {
-                height: 80px;
+                height: inherit;
             }
             
             width: 100%;
@@ -69,6 +90,7 @@
             .num-votes {
                 width: 100%;
                 height: 100%;
+                font-weight: bold;
                 
                 text-align: center;
                 padding-top: 30px;
